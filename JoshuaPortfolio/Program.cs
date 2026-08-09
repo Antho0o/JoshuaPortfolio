@@ -6,9 +6,14 @@ namespace JoshuaPortfolio
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Disable configuration file reload watchers.
+            builder.Configuration.Sources
+                .OfType<Microsoft.Extensions.Configuration.Json.JsonConfigurationSource>()
+                .ToList()
+                .ForEach(source => source.ReloadOnChange = false);
+
             var app = builder.Build();
 
-            // Serve files from wwwroot
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
